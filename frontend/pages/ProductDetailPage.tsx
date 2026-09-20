@@ -44,10 +44,8 @@ export function ProductDetailPage() {
   const [barcodeValue, setBarcodeValue] = useState("");
   const [priceList, setPriceList] = useState("UNITARIO");
   const [priceAmount, setPriceAmount] = useState("");
-  const [priceCurrency, setPriceCurrency] = useState("");
   const [costType, setCostType] = useState("ACTUAL");
   const [costAmount, setCostAmount] = useState("");
-  const [costCurrency, setCostCurrency] = useState("");
   const [taxValues, setTaxValues] = useState({
     igv_exempt: false,
     percepcion: "",
@@ -111,7 +109,7 @@ export function ProductDetailPage() {
       createProductPrice(productId!, {
         price_list: priceList,
         amount: Number(priceAmount),
-        currency: priceCurrency,
+        currency: "PEN",
         valid_from: today(),
       }),
     onSuccess: async () => {
@@ -126,7 +124,7 @@ export function ProductDetailPage() {
       createProductCost(productId!, {
         cost_type: costType,
         amount: Number(costAmount),
-        currency: costCurrency,
+        currency: "PEN",
         valid_from: today(),
       }),
     onSuccess: async () => {
@@ -297,7 +295,7 @@ export function ProductDetailPage() {
             <CardDescription>Nueva fila = nueva vigencia.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-3 md:grid-cols-[180px_1fr_120px_auto]">
+            <div className="grid gap-3 md:grid-cols-[180px_1fr_auto]">
               <select className={selectClassName} value={priceList} onChange={(event) => setPriceList(event.target.value)}>
                 <option value="UNITARIO">UNITARIO</option>
                 <option value="INTERMEDIO">INTERMEDIO</option>
@@ -307,7 +305,6 @@ export function ProductDetailPage() {
                 <option value="LISTA4">LISTA4</option>
               </select>
               <Input type="number" value={priceAmount} onChange={(event) => setPriceAmount(event.target.value)} placeholder="Monto" />
-              <Input value={priceCurrency} onChange={(event) => setPriceCurrency(event.target.value.toUpperCase())} placeholder="MON" />
               <Button onClick={() => submitMutation(() => priceMutation.mutateAsync())}>Agregar</Button>
             </div>
             <DataTable
@@ -330,7 +327,7 @@ export function ProductDetailPage() {
             <CardDescription>Nueva fila = nueva vigencia.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-3 md:grid-cols-[180px_1fr_120px_auto]">
+            <div className="grid gap-3 md:grid-cols-[180px_1fr_auto]">
               <select className={selectClassName} value={costType} onChange={(event) => setCostType(event.target.value)}>
                 <option value="ACTUAL">ACTUAL</option>
                 <option value="REPOSICION">REPOSICION</option>
@@ -339,7 +336,6 @@ export function ProductDetailPage() {
                 <option value="TOTAL">TOTAL</option>
               </select>
               <Input type="number" value={costAmount} onChange={(event) => setCostAmount(event.target.value)} placeholder="Monto" />
-              <Input value={costCurrency} onChange={(event) => setCostCurrency(event.target.value.toUpperCase())} placeholder="MON" />
               <Button onClick={() => submitMutation(() => costMutation.mutateAsync())}>Agregar</Button>
             </div>
             <DataTable
